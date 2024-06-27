@@ -7,6 +7,10 @@ from Bio import SeqIO
 import sys
 import os
 import subprocess
+from datetime import datetime
+
+current_date = datetime.today()
+current_date = current_date.strftime("%Y%m%d")
 
 def run_blast(database_path, input_fasta, outputfile):
     """Run BLAST and return results in tabular format"""
@@ -85,11 +89,12 @@ if __name__ == "__main__":
         test_sequence = "TAGGATTGTGACATATATC"  # Example test sequence
         test_blast_single_sequence(sequence=test_sequence, database_path=database_path)
     else:
-        blast_output_tsv = "blast_results.tsv"  # Temporary file to store BLAST results
+        blast_output_tsv = f'{current_date}_blast_results.tsv'  # Temporary file to store BLAST results
 
         run_blast(database_path=database_path, input_fasta=input_fasta, outputfile=blast_output_tsv)
         read_blast_output(tsv_in=blast_output_tsv, gff_out=output_gff)
+        
 
         # Optionally, remove the temporary BLAST TSV file
-        os.remove(blast_output_tsv)
+        # os.remove(blast_output_tsv)
 
